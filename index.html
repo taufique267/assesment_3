@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+        .task {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 5px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Task 1: Simple Calculator -->
+        <div class="task">
+            <h2>Task 1: Simple Calculator</h2>
+            <input type="text" id="num1" placeholder="Enter first number">
+            <input type="text" id="num2" placeholder="Enter second number">
+            <input type="text" id="operator" placeholder="Enter operator (+, -, *, /)">
+            <button onclick="calculate()">Calculate</button>
+            <p id="calcResult"></p>
+        </div>
+
+        <!-- Task 2: Array Operations -->
+        <div class="task">
+            <h2>Task 2: Array Operations</h2>
+            <input type="text" id="arrayInput" placeholder="Enter numbers separated by commas">
+            <button onclick="sumEvenNumbers()">Sum Even Numbers</button>
+            <p id="arrayResult"></p>
+        </div>
+
+        <!-- Task 3: Object Manipulation -->
+        <div class="task">
+            <h2>Task 3: Object Manipulation</h2>
+            <input type="text" id="firstName" placeholder="First Name">
+            <input type="text" id="lastName" placeholder="Last Name">
+            <input type="text" id="age" placeholder="Age">
+            <button onclick="createPerson()">Create Person</button>
+            <p id="personInfo"></p>
+            <button onclick="incrementAge()">Increment Age</button>
+        </div>
+    </div>
+
+    <script>
+        // Task 1: Simple Calculator
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const operator = document.getElementById('operator').value;
+            let result;
+
+            if (isNaN(num1) || isNaN(num2)) {
+                result = "Please enter valid numbers.";
+            } else {
+                switch (operator) {
+                    case '+':
+                        result = num1 + num2;
+                        break;
+                    case '-':
+                        result = num1 - num2;
+                        break;
+                    case '*':
+                        result = num1 * num2;
+                        break;
+                    case '/':
+                        result = num2 !== 0 ? num1 / num2 : "Cannot divide by zero";
+                        break;
+                    default:
+                        result = "Invalid operator. Use +, -, *, or /.";
+                }
+            }
+
+            document.getElementById('calcResult').textContent = "Result: " + result;
+        }
+
+        // Task 2: Array Operations
+        function sumEvenNumbers() {
+            const arrayInput = document.getElementById('arrayInput').value;
+            const numbers = arrayInput.split(',').map(Number);
+            const sum = numbers.reduce((acc, num) => {
+                if (num % 2 === 0) {
+                    acc += num;
+                }
+                return acc;
+            }, 0);
+
+            document.getElementById('arrayResult').textContent = "Sum of even numbers: " + sum;
+        }
+
+        // Task 3: Object Manipulation
+        let person;
+
+        function createPerson() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const age = parseInt(document.getElementById('age').value, 10);
+
+            person = {
+                firstName: firstName,
+                lastName: lastName,
+                age: age,
+                getFullName: function() {
+                    return this.firstName + " " + this.lastName;
+                },
+                incrementAge: function() {
+                    this.age += 1;
+                }
+            };
+
+            document.getElementById('personInfo').textContent = "Person created: " + person.getFullName() + ", Age: " + person.age;
+        }
+
+        function incrementAge() {
+            if (person) {
+                person.incrementAge();
+                document.getElementById('personInfo').textContent = "Person: " + person.getFullName() + ", Age: " + person.age;
+            } else {
+                document.getElementById('personInfo').textContent = "Please create a person first.";
+            }
+        }
+    </script>
+</body>
+</html>
